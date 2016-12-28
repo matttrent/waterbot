@@ -112,10 +112,13 @@ def tweet_changes():
 				storage = last_measure.storage / 1e6
 				scale = 'million'
 
-			tweet = '{reservoir} current level: {storage:0.2f} {scale} liters'.format(
+			percent = 100 * last_measure.storage / last_measure.reservoir.capacity
+
+			tweet = '{reservoir} currently contains {storage:0.0f} {scale} liters, {percent:2.1f}% full'.format(
 				reservoir=reservoir.name,
 				storage=storage,
-				scale=scale
+				scale=scale,
+				percent=percent
 			)
 
 			models.Tweet.create(
