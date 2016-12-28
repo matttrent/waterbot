@@ -52,6 +52,7 @@ def get_reservoir(station_id, sensor_num=15, dur_code='D', start_date=None, end_
 	df.replace('m', np.nan, inplace=True)
 	df.dropna(inplace=True)
 	df.reservoir_storage = df.reservoir_storage.astype(float)
+	df = df[df.reservoir_storage >= 100]
 
 	return df
 
@@ -105,13 +106,8 @@ def tweet_changes():
 
 		if last_tweet is None or difference >= reservoir.threshold:
 
-			if last_measure.storage / 1e9 > 1.0:
-				storage = last_measure.storage / 1e9
-				scale = 'billion'
-			else:
-				storage = last_measure.storage / 1e6
-				scale = 'million'
-
+			storage = last_measure.storage / 1e9
+			scale = 'billion'
 			percent = 100 * last_measure.storage / last_measure.reservoir.capacity
 
 			tweet = '{reservoir} currently contains {storage:0.0f} {scale} liters, {percent:2.1f}% full'.format(
@@ -129,7 +125,8 @@ def tweet_changes():
 			)
 
 			print tweet
-			twapi.update_status(tweet)
+			if util.environment() == 'production':
+				twapi.update_status(tweet)
 
 
 if __name__ == '__main__':
