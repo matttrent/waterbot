@@ -2,66 +2,79 @@
 	{
 		"station_id":	"cle",
 		"name":			"Trinity Lake",
-		"capacity":		2447650
+		"capacity":		2447650,
+		"threshold":	0.01
 	},
 	{
 		"station_id":	"sha",
 		"name":			"Lake Shasta",
-		"capacity":		4552000
+		"capacity":		4552000,
+		"threshold":	0.01
 	},
 	{
 		"station_id":	"oro",
 		"name":			"Lake Oroville",
-		"capacity":		3537577
+		"capacity":		3537577,
+		"threshold":	0.01
 	},
 	{
 		"station_id":	"fol",
 		"name":			"Folsom Lake",
-		"capacity":		977000
+		"capacity":		977000,
+		"threshold":	0.02
 	},
 	{
 		"station_id":	"nml",
 		"name":			"New Melones Lake",
-		"capacity":		2400000
+		"capacity":		2400000,
+		"threshold":	0.01
 	},
 	{
 		"station_id":	"dnp",
 		"name":			"Don Pedro Reservoir",
-		"capacity":		2030000
+		"capacity":		2030000,
+		"threshold":	0.01
 	},
 	{
 		"station_id":	"exc",
 		"name":			"Lake McClure",
-		"capacity":		1024600
+		"capacity":		1024600,
+		"threshold":	0.01
 	},
 	{
 		"station_id":	"snl",
 		"name":			"San Luis Reservoir",
-		"capacity":		2041000
+		"capacity":		2041000,
+		"threshold":	0.01
 	},
 	{
 		"station_id":	"mil",
 		"name":			"Millerton Lake",
-		"capacity":		520500
+		"capacity":		520500,
+		"threshold":	0.02
 	},
 	{
 		"station_id":	"pnf",
 		"name":			"Pine Flat Reservoir",
-		"capacity":		1000000
+		"capacity":		1000000,
+		"threshold":	0.02
 	},
 	{
 		"station_id":	"prr",
 		"name":			"Lake Perris",
-		"capacity":		131452
+		"capacity":		131452,
+		"threshold":	0.05
 	},
 	{
 		"station_id":	"cas",
 		"name":			"Castaic Lake",
-		"capacity":		325000
+		"capacity":		325000,
+		"threshold":	0.05
 	},
 	{
 		"station_id":	"hth",
 		"name":			"Hetch Hetchy",
-		"capacity":		360000
+		"capacity":		360000,
+		"threshold":	0.05
 	}
 ]

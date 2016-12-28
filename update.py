@@ -87,21 +87,41 @@ def update_all_reservoirs():
 		update_reservoir_storage(reservoir)
 
 
-def tweet_results():
-
-	sm = models.StorageMeasure.get()
-
-	tweet = '{reservoir} current level: {storage:0.2f} billion liters'.format(
-		reservoir=sm.reservoir.name,
-		storage=sm.storage / 1e9
-	)
-
-	print tweet
+def tweet_changes():
 
 	twapi = twitter.get_api()
-	twapi.update_status(tweet)
+	reservoirs = models.Reservoir.select()
+
+	for reservoir in reservoirs:
+
+		last_measure = reservoir.measures.order_by(-models.StorageMeasure.date).get()
+
+		tweets = reservoir.tweets.order_by(-models.Tweet.posted_at)
+
+		last_tweet = None
+		if tweets.count() > 0:
+			last_tweet = tweets.get()
+			difference = abs( last_measure.storage - last_tweet.measure.storage )
+
+		if last_tweet is None or difference >= reservoir.threshold:
+
+			tweet = '{reservoir} current level: {storage:0.2f} billion liters'.format(
+				reservoir=reservoir.name,
+				storage=last_measure.storage / 1e9
+			)
+
+			models.Tweet.create(
+				reservoir=reservoir,
+				measure=last_measure,
+				posted_at=dt.datetime.utcnow(),
+				text=tweet
+			)
+
+			print tweet
+
+	# twapi.update_status(tweet)
 
 
 if __name__ == '__main__':
 	update_all_reservoirs()
-	tweet_results()
+	tweet_changes()

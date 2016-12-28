@@ -14,6 +14,7 @@ class Reservoir(BaseModel):
 	station_id = peewee.CharField()
 	name = peewee.CharField()
 	capacity = peewee.FloatField()
+	threshold = peewee.FloatField(default=.02)
 
 
 class StorageMeasure(BaseModel):
@@ -26,6 +27,7 @@ class StorageMeasure(BaseModel):
 class Tweet(BaseModel):
 
 	text = peewee.TextField()
-	timestamp = peewee.DateTimeField()
+	posted_at = peewee.DateTimeField()
+	reservoir = peewee.ForeignKeyField(Reservoir, related_name='tweets')
 	measure = peewee.ForeignKeyField(StorageMeasure, related_name='tweets')
 
