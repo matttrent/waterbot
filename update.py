@@ -100,11 +100,14 @@ def tweet_changes():
 		tweets = reservoir.tweets.order_by(-models.Tweet.posted_at)
 
 		last_tweet = None
+		difference = 0
+		storage_threshold = reservoir.capacity * reservoir.threshold
+
 		if tweets.count() > 0:
 			last_tweet = tweets.get()
 			difference = abs( last_measure.storage - last_tweet.measure.storage )
 
-		if last_tweet is None or difference >= reservoir.threshold:
+		if last_tweet is None or difference >= storage_threshold:
 
 			storage = last_measure.storage / 1e9
 			scale = 'billion'
