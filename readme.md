@@ -22,6 +22,7 @@ run following commands:
     source venv/bin/activate
     pip install -r requirements.txt
     arnold up 0
+    python update.py
 
 ## Deploy
 
@@ -29,3 +30,5 @@ run following commands:
     heroku addons:create heroku-postgresql:hobby-dev
     heroku addons:create scheduler:standard
     git push heroku master
+    heroku run arnold up 0
+    heroku run python update.py
