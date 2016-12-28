@@ -1,13 +1,13 @@
 {
-  "name": "Flask Heroku Sample",
-  "description": "A sample Flask app on Heroku",
+  "name": "WaterBot",
+  "description": "Twitter bot reporting California reservoir levels",
   "keywords": [
-    "flask",
     "python",
-    "sample"
+    "waterbot"
   ],
-  "repository": "https://github.com/yefim/flask-heroku-sample",
+  "repository": "https://github.com/matttrent/waterbot",
   "addons": [
-    "heroku-postgresql"
+    "heroku-postgresql",
+    "heroku-scheduler"
   ]
 }
