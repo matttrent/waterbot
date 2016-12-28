@@ -5,7 +5,7 @@ import requests
 import numpy as np
 import pandas as pd
 
-from waterbot import models, util
+from waterbot import models, util, twitter
 
 
 # http://cdec.water.ca.gov/cgi-progs/queryCSV
@@ -59,8 +59,6 @@ def get_reservoir(station_id, sensor_num=15, dur_code='D', start_date=None, end_
 def update_reservoir_storage(reservoir):
 
 	storage_df = get_reservoir(station_id=reservoir.station_id)
-	current_storage = storage_df.iloc[-1]['reservoir_storage']
-	print reservoir.station_id, 100 * util.acrefeet_to_liters(current_storage) / reservoir.capacity
 
 	storage_measures = (
 		models.StorageMeasure.select()
@@ -68,7 +66,6 @@ def update_reservoir_storage(reservoir):
 		.where(models.StorageMeasure.date >= storage_df.date.min())
 	)
 
-	print len(storage_measures)
 	logged_dates = [sm.date for sm in storage_measures]
 
 	storage_df = storage_df[ ~storage_df.date.isin(logged_dates) ]
@@ -80,7 +77,7 @@ def update_reservoir_storage(reservoir):
 			storage=util.acrefeet_to_liters(row.reservoir_storage)
 		)
 
-	print 'added {} rows'.format(len(storage_df))
+	print '{} added {} rows'.format(reservoir.station_id, len(storage_df))
 
 
 def update_all_reservoirs():
@@ -90,5 +87,21 @@ def update_all_reservoirs():
 		update_reservoir_storage(reservoir)
 
 
+def tweet_results():
+
+	sm = models.StorageMeasure.get()
+
+	tweet = '{reservoir} current level: {storage:0.2f} billion liters'.format(
+		reservoir=sm.reservoir.name,
+		storage=sm.storage / 1e9
+	)
+
+	print tweet
+
+	twapi = twitter.get_api()
+	twapi.update_status(tweet)
+
+
 if __name__ == '__main__':
 	update_all_reservoirs()
+	tweet_results()
