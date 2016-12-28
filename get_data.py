@@ -5,63 +5,8 @@ import requests
 import numpy as np
 import pandas as pd
 
+from waterbot import models, util
 
-ACRE_FEET_TO_LITERS = 1233481.85532
-
-RESERVOIRS = {
-	'cle':	{
-		'name':		'Trinity Lake',
-		'capacity':	2447650,
-	},
-	'sha':	{
-		'name':		'Lake Shasta',
-		'capacity':	4552000,
-	},
-	'oro':	{
-		'name':		'Lake Oroville',
-		'capacity':	3537577,
-	},
-	'fol':	{
-		'name':		'Folsom Lake',
-		'capacity':	977000,
-	},
-	'nml':	{
-		'name':		'New Melones Lake',
-		'capacity':	2400000,
-	},
-	'dnp':	{
-		'name':		'Don Pedro Reservoir',
-		'capacity':	2030000,
-	},
-	'exc':	{
-		'name':		'Lake McClure',
-		'capacity':	1024600,
-	},
-	'snl':	{
-		'name':		'San Luis Reservoir',
-		'capacity':	2041000,
-	},
-	'mil':	{
-		'name':		'Millerton Lake',
-		'capacity':	520500,
-	},
-	'pnf':	{
-		'name':		'Pine Flat Reservoir',
-		'capacity':	1000000,
-	},
-	'prr':	{
-		'name':		'Lake Perris',
-		'capacity':	131452,
-	},
-	'cas':	{
-		'name':		'Castaic Lake',
-		'capacity':	325000,
-	},
-	'hth':	{
-		'name':		'Hetch Hetchy',
-		'capacity':	360000,
-	},
-}
 
 # http://cdec.water.ca.gov/cgi-progs/queryCSV
 # ?station_id=hth
@@ -111,6 +56,39 @@ def get_reservoir(station_id, sensor_num=15, dur_code='D', start_date=None, end_
 	return df
 
 
-for station_id in RESERVOIRS.keys():
-	current_storage = get_reservoir(station_id=station_id).iloc[-1]['reservoir_storage']
-	print( station_id, current_storage / RESERVOIRS[station_id]['capacity'] )
+def update_reservoir_storage(reservoir):
+
+	storage_df = get_reservoir(station_id=reservoir.station_id)
+	current_storage = storage_df.iloc[-1]['reservoir_storage']
+	print reservoir.station_id, 100 * util.acrefeet_to_liters(current_storage) / reservoir.capacity
+
+	storage_measures = (
+		models.StorageMeasure.select()
+		.where(models.StorageMeasure.reservoir == reservoir)
+		.where(models.StorageMeasure.date >= storage_df.date.min())
+	)
+
+	print len(storage_measures)
+	logged_dates = [sm.date for sm in storage_measures]
+
+	storage_df = storage_df[ ~storage_df.date.isin(logged_dates) ]
+
+	for name, row in storage_df.iterrows():
+		models.StorageMeasure.create(
+			reservoir=reservoir,
+			date=row.date,
+			storage=util.acrefeet_to_liters(row.reservoir_storage)
+		)
+
+	print 'added {} rows'.format(len(storage_df))
+
+
+def update_all_reservoirs():
+
+	reservoirs = models.Reservoir.select()
+	for reservoir in reservoirs:
+		update_reservoir_storage(reservoir)
+
+
+if __name__ == '__main__':
+	update_all_reservoirs()
