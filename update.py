@@ -105,9 +105,17 @@ def tweet_changes():
 
 		if last_tweet is None or difference >= reservoir.threshold:
 
-			tweet = '{reservoir} current level: {storage:0.2f} billion liters'.format(
+			if last_measure.storage / 1e9 > 1.0:
+				storage = last_measure.storage / 1e9
+				scale = 'billion'
+			else:
+				storage = last_measure.storage / 1e6
+				scale = 'million'
+
+			tweet = '{reservoir} current level: {storage:0.2f} {scale} liters'.format(
 				reservoir=reservoir.name,
-				storage=last_measure.storage / 1e9
+				storage=storage,
+				scale=scale
 			)
 
 			models.Tweet.create(
@@ -118,8 +126,7 @@ def tweet_changes():
 			)
 
 			print tweet
-
-	# twapi.update_status(tweet)
+			twapi.update_status(tweet)
 
 
 if __name__ == '__main__':
