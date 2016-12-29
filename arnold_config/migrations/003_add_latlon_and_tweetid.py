@@ -22,10 +22,9 @@ def up():
 
 		if len(res_entries) > 0:
 			res = res_entries[0]
-			print res['latitude'], res['longitude']
 			reservoir.latitude = res['latitude']
 			reservoir.longitude = res['longitude']
-			print reservoir.save()
+			reservoir.save()
 
 
 def down():
