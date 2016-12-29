@@ -1,106 +1,132 @@
 [
 	{
-		"station_id":	"cle",
-		"name":			"Trinity Lake",
-		"capacity":		2447650,
-		"threshold":	0.01,
-		"latitude":		40.801000,
-		"longitude":	-122.762000
+		"station_id":		"cle",
+		"name":				"Trinity Lake",
+		"capacity":			2447650,
+		"threshold":		0.01,
+		"latitude":			40.801000,
+		"longitude":	    -122.762000,
+		"nearest_city": 	"Redding",
+		"twitter_place_id":	"7d51c8dfbb08a9de"
 	},
 	{
-		"station_id":	"sha",
-		"name":			"Lake Shasta",
-		"capacity":		4552000,
-		"threshold":	0.01,
-		"latitude":		40.718000,
-		"longitude":	-122.420000
+		"station_id":		"sha",
+		"name":				"Lake Shasta",
+		"capacity":			4552000,
+		"threshold":		0.01,
+		"latitude":			40.718000,
+		"longitude":		-122.420000,
+		"nearest_city": 	"Redding",
+		"twitter_place_id":	"7d51c8dfbb08a9de"
 	},
 	{
-		"station_id":	"oro",
-		"name":			"Lake Oroville",
-		"capacity":		3537577,
-		"threshold":	0.01,
-		"latitude":		39.540000,
-		"longitude":	-121.493000
+		"station_id":		"oro",
+		"name":				"Lake Oroville",
+		"capacity":			3537577,
+		"threshold":		0.01,
+		"latitude":			39.540000,
+		"longitude":		-121.493000,
+		"nearest_city": 	"Oroville",
+		"twitter_place_id":	"003f1e4e2f87ed96"
 	},
 	{
-		"station_id":	"fol",
-		"name":			"Folsom Lake",
-		"capacity":		977000,
-		"threshold":	0.02,
-		"latitude":		38.683000,
-		"longitude":	-121.183000
+		"station_id":		"fol",
+		"name":				"Folsom Lake",
+		"capacity":			977000,
+		"threshold":		0.02,
+		"latitude":			38.683000,
+		"longitude":		-121.183000,
+		"nearest_city": 	"Sacramento",
+		"twitter_place_id":	"b71fac2ee9792cbe"
 	},
 	{
-		"station_id":	"nml",
-		"name":			"New Melones Lake",
-		"capacity":		2400000,
-		"threshold":	0.01,
-		"latitude":		37.948100,
-		"longitude":	-120.525000
+		"station_id":		"nml",
+		"name":				"New Melones Lake",
+		"capacity":			2400000,
+		"threshold":		0.01,
+		"latitude":			37.948100,
+		"longitude":		-120.525000,
+		"nearest_city": 	"Sonora",
+		"twitter_place_id":	"c6f3394f6be73efd"
 	},
 	{
-		"station_id":	"dnp",
-		"name":			"Don Pedro Reservoir",
-		"capacity":		2030000,
-		"threshold":	0.01,
-		"latitude":		37.702000,
-		"longitude":	-120.421000
+		"station_id":		"dnp",
+		"name":				"Don Pedro Reservoir",
+		"capacity":			2030000,
+		"threshold":		0.01,
+		"latitude":			37.702000,
+		"longitude":		-120.421000,
+		"nearest_city": 	"Sonora",
+		"twitter_place_id":	"c6f3394f6be73efd"
 	},
 	{
-		"station_id":	"exc",
-		"name":			"Lake McClure",
-		"capacity":		1024600,
-		"threshold":	0.01,
-		"latitude":		37.585000,
-		"longitude":	-120.270000
+		"station_id":		"exc",
+		"name":				"Lake McClure",
+		"capacity":			1024600,
+		"threshold":		0.01,
+		"latitude":			37.585000,
+		"longitude":		-120.270000,
+		"nearest_city": 	"Sonora",
+		"twitter_place_id":	"c6f3394f6be73efd"
 	},
 	{
-		"station_id":	"snl",
-		"name":			"San Luis Reservoir",
-		"capacity":		2041000,
-		"threshold":	0.01,
-		"latitude":		37.033000,
-		"longitude":		-121.133000
+		"station_id":		"snl",
+		"name":				"San Luis Reservoir",
+		"capacity":			2041000,
+		"threshold":		0.01,
+		"latitude":			37.033000,
+		"longitude":		-121.133000,
+		"nearest_city": 	"Los Banos",
+		"twitter_place_id":	"b1b6fc646de75904"
 	},
 	{
-		"station_id":	"mil",
-		"name":			"Millerton Lake",
-		"capacity":		520500,
-		"threshold":	0.02,
-		"latitude":		37.001000,
-		"longitude":	-119.705000
+		"station_id":		"mil",
+		"name":				"Millerton Lake",
+		"capacity":			520500,
+		"threshold":		0.02,
+		"latitude":			37.001000,
+		"longitude":		-119.705000,
+		"nearest_city": 	"Fresno",
+		"twitter_place_id":	"944c03c1d85ef480"
 	},
 	{
-		"station_id":	"pnf",
-		"name":			"Pine Flat Reservoir",
-		"capacity":		1000000,
-		"threshold":	0.02,
-		"latitude":		36.833000,
-		"longitude":	-119.325000
+		"station_id":		"pnf",
+		"name":				"Pine Flat Reservoir",
+		"capacity":			1000000,
+		"threshold":		0.02,
+		"latitude":			36.833000,
+		"longitude":		-119.325000,
+		"nearest_city": 	"Fresno",
+		"twitter_place_id":	"944c03c1d85ef480"
 	},
 	{
-		"station_id":	"prr",
-		"name":			"Lake Perris",
-		"capacity":		131452,
-		"threshold":	0.05,
-		"latitude":		33.858000,
-		"longitude":	-117.183000
+		"station_id":		"prr",
+		"name":				"Lake Perris",
+		"capacity":			131452,
+		"threshold":		0.05,
+		"latitude":			33.858000,
+		"longitude":		-117.183000,
+		"nearest_city": 	"Riverside",
+		"twitter_place_id":	"6ba08e404aed471f"
 	},
 	{
-		"station_id":	"cas",
-		"name":			"Castaic Lake",
-		"capacity":		325000,
-		"threshold":	0.05,
-		"latitude":		34.515200,
-		"longitude":	-118.610100
+		"station_id":		"cas",
+		"name":				"Castaic Lake",
+		"capacity":			325000,
+		"threshold":		0.05,
+		"latitude":			34.515200,
+		"longitude":		-118.610100,
+		"nearest_city": 	"Los Angeles",
+		"twitter_place_id":	"3b77caf94bfc81fe"
 	},
 	{
-		"station_id":	"hth",
-		"name":			"Hetch Hetchy",
-		"capacity":		360000,
-		"threshold":	0.05,
-		"latitude":		37.950000,
-		"longitude":	-119.783000
+		"station_id":		"hth",
+		"name":				"Hetch Hetchy",
+		"capacity":			360000,
+		"threshold":		0.05,
+		"latitude":			37.950000,
+		"longitude":		-119.783000,
+		"nearest_city": 	"Sonora",
+		"twitter_place_id":	"c6f3394f6be73efd"
 	}
 ]

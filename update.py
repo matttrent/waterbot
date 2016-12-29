@@ -125,7 +125,8 @@ def tweet_changes():
 			tweet_id = None
 			if util.environment() == 'production':
 				status = twapi.update_status(
-					tweet, lat=reservoir.latitude, long=reservoir.longitude)
+					tweet, lat=reservoir.latitude, long=reservoir.longitude, 
+					place_id=reservoir.twitter_place_id)
 				tweet_id = status.id
 
 			models.Tweet.create(

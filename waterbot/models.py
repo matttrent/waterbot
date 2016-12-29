@@ -17,6 +17,8 @@ class Reservoir(BaseModel):
 	threshold = peewee.FloatField(default=.02)
 	latitude = peewee.FloatField(null=True)
 	longitude = peewee.FloatField(null=True)
+	nearest_city = peewee.CharField()
+	twitter_place_id = peewee.CharField()
 
 
 class StorageMeasure(BaseModel):
