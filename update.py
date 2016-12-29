@@ -120,16 +120,21 @@ def tweet_changes():
 				percent=percent
 			)
 
+			print tweet
+
+			tweet_id = None
+			if util.environment() == 'production':
+				status = twapi.update_status(
+					tweet, lat=reservoir.latitude, long=reservoir.longitude)
+				tweet_id = status.id
+
 			models.Tweet.create(
 				reservoir=reservoir,
 				measure=last_measure,
 				posted_at=dt.datetime.utcnow(),
-				text=tweet
+				text=tweet,
+				tweet_id=tweet_id
 			)
-
-			print tweet
-			if util.environment() == 'production':
-				twapi.update_status(tweet)
 
 
 if __name__ == '__main__':

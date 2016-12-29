@@ -11,6 +11,6 @@ def up():
 
 
 def down():
-	models.Reservoir.delete()
-	models.StorageMeasure.delete()
-	models.Tweet.delete()
+	models.Reservoir.drop_table(cascade=True)
+	models.StorageMeasure.drop_table(cascade=True)
+	models.Tweet.drop_table(cascade=True)

@@ -15,6 +15,8 @@ class Reservoir(BaseModel):
 	name = peewee.CharField()
 	capacity = peewee.FloatField()
 	threshold = peewee.FloatField(default=.02)
+	latitude = peewee.FloatField(null=True)
+	longitude = peewee.FloatField(null=True)
 
 
 class StorageMeasure(BaseModel):

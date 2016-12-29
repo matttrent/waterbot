@@ -16,4 +16,6 @@ def up():
 
 
 def down():
+	models.Tweet.delete().execute()
+	models.StorageMeasure.delete().execute()
 	models.Reservoir.delete().execute()
