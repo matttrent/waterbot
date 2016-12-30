@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import io
 import datetime as dt
@@ -106,16 +107,21 @@ def tweet_changes():
 
 		if tweets.count() > 0:
 			last_tweet = tweets.get()
-			difference = abs( last_measure.storage - last_tweet.measure.storage )
+			difference = last_measure.storage - last_tweet.measure.storage
 
-		if last_tweet is None or difference >= storage_threshold:
+		if last_tweet is None or abs(difference) >= storage_threshold:
+
+			direction = u'increased ⬆️'
+			if difference < 0:
+				direction = u'decreased ⬇️'
 
 			storage = last_measure.storage / 1e9
 			scale = 'billion'
 			percent = 100 * last_measure.storage / last_measure.reservoir.capacity
 
-			tweet = '{reservoir} currently contains {storage:0.0f} {scale} liters, {percent:2.1f}% full'.format(
+			tweet = u'{reservoir} {direction} to {storage:0.0f} {scale} liters, {percent:2.1f}% full.'.format(
 				reservoir=reservoir.name,
+				direction=direction,
 				storage=storage,
 				scale=scale,
 				percent=percent
