@@ -61,7 +61,10 @@ def get_reservoir(station_id, sensor_num=15, dur_code='D', start_date=None, end_
 
 def update_reservoir_storage(reservoir):
 
-	storage_df = get_reservoir(station_id=reservoir.station_id)
+	try:
+		storage_df = get_reservoir(station_id=reservoir.station_id)
+	except requests.ConnectionError:
+		return
 
 	storage_measures = (
 		models.StorageMeasure.select()
@@ -150,6 +153,6 @@ def tweet_all_changes():
 
 
 if __name__ == '__main__':
-	
+
 	update_all_reservoirs()
 	tweet_all_changes()
