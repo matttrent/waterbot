@@ -126,8 +126,6 @@ def tweet_changes(reservoir):
 		percent=percent
 	)
 
-	print tweet
-
 	tweet_id = None
 	if util.environment() == 'production':
 		twapi = twitter.get_api()
@@ -135,6 +133,8 @@ def tweet_changes(reservoir):
 			tweet, lat=reservoir.latitude, long=reservoir.longitude, 
 			place_id=reservoir.twitter_place_id)
 		tweet_id = status.id
+	elif util.environment() == 'development':
+		print tweet
 
 	models.Tweet.create(
 		reservoir=reservoir,

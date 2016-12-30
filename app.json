@@ -8,6 +8,6 @@
   "repository": "https://github.com/matttrent/waterbot",
   "addons": [
     "heroku-postgresql",
-    "heroku-scheduler"
+    "scheduler"
   ]
 }
