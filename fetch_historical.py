@@ -6,7 +6,7 @@ import pandas as pd
 from waterbot import water_api
 
 
-START_DATE 	= dt.date(1995, 1, 1)
+START_DATE 	= dt.date(1990, 1, 1)
 END_DATE	= dt.date(2016, 12, 31)
 
 
@@ -25,4 +25,5 @@ if __name__ == '__main__':
 			'historical_levels/{station_id}.csv'.format(
 				station_id=reservoir['station_id']
 			),
+			index=False
 		)
