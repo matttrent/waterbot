@@ -1,10 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import requests
+
 import datetime as dt
+import pandas as pd
 
 from waterbot import models, util, twitter, water_api
+
+
+AVERAGE_DIR = 'seasonal_averages'
 
 
 def update_reservoir_storage(reservoir):
@@ -59,20 +65,33 @@ def tweet_changes(reservoir):
 	if last_tweet is not None and abs(difference) < storage_threshold:
 		return
 
-	direction = u'increased ⬆️'
+	direction = u'⬆'
 	if difference < 0:
-		direction = u'decreased ⬇️'
+		direction = u'⬇'
+
+	percent_capacity = 100 * last_measure.storage / last_measure.reservoir.capacity
+	percent_capacity_diff = 100 * difference / last_measure.reservoir.capacity
+
+	day_of_year = last_measure.date.timetuple().tm_yday
+	seasonal_avg_fn = os.path.join(
+		AVERAGE_DIR,
+		'{station_id}.csv'.format(station_id=reservoir.station_id)
+	)
+	seasonal_avg = pd.read_csv(seasonal_avg_fn, index_col=0)
+	seasonal_avg = seasonal_avg.loc[day_of_year].reservoir_storage
+	seasonal_multiple = last_measure.storage / util.acrefeet_to_liters(seasonal_avg)
 
 	storage = last_measure.storage / 1e9
 	scale = 'billion'
-	percent = 100 * last_measure.storage / last_measure.reservoir.capacity
 
-	tweet = u'{reservoir} {direction} to {storage:0.0f} {scale} liters, {percent:2.1f}% full.'.format(
+	tweet = u'{reservoir}: {direction} {percent_diff:+2.1f}%, now {percent_full:2.1f}% full. {seasonal_multiple:3.2f}x seasonal average.'.format(
 		reservoir=reservoir.name,
 		direction=direction,
+		percent_diff=percent_capacity_diff,		
+		percent_full=percent_capacity,
+		seasonal_multiple=seasonal_multiple,
 		storage=storage,
 		scale=scale,
-		percent=percent
 	)
 
 	tweet_id = None
