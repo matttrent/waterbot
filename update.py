@@ -72,6 +72,17 @@ def tweet_changes(reservoir):
 	percent_capacity = 100 * last_measure.storage / last_measure.reservoir.capacity
 	percent_capacity_diff = 100 * difference / last_measure.reservoir.capacity
 
+	days_since_last_update_message = ''
+	if last_tweet is not None:
+		days_since_last = (last_measure.date - last_tweet.posted_at.date()).days
+		days = 'day'
+		if days_since_last > 1:
+			days = 'days' 
+		days_since_last_update_message = ' in past {since_last} {days}'.format(
+			since_last=days_since_last,
+			days=days
+		)
+
 	day_of_year = last_measure.date.timetuple().tm_yday
 	seasonal_avg_fn = os.path.join(
 		AVERAGE_DIR,
@@ -84,10 +95,11 @@ def tweet_changes(reservoir):
 	storage = last_measure.storage / 1e9
 	scale = 'billion'
 
-	tweet = u'{reservoir}: {direction} {percent_diff:+2.1f}%, now {percent_full:2.1f}% full. {seasonal_multiple:3.2f}x seasonal average.'.format(
+	tweet = u'{reservoir}: {direction} {percent_diff:+2.1f}%{days_since}, now {percent_full:2.1f}% full. {seasonal_multiple:3.2f}x seasonal average.'.format(
 		reservoir=reservoir.name,
 		direction=direction,
-		percent_diff=percent_capacity_diff,		
+		percent_diff=percent_capacity_diff,	
+		days_since=days_since_last_update_message,
 		percent_full=percent_capacity,
 		seasonal_multiple=seasonal_multiple,
 		storage=storage,
@@ -102,7 +114,7 @@ def tweet_changes(reservoir):
 			place_id=reservoir.twitter_place_id)
 		tweet_id = status.id
 	elif util.environment() == 'development':
-		print tweet
+		print len(tweet), '\t', tweet 
 
 	models.Tweet.create(
 		reservoir=reservoir,
