@@ -75,6 +75,7 @@ def tweet_changes(reservoir):
 	days_since_last_update_message = ''
 	if last_tweet is not None:
 		days_since_last = (last_measure.date - last_tweet.posted_at.date()).days
+		days_since_last = min(days_since_last, 1)
 		days = 'day'
 		if days_since_last > 1:
 			days = 'days' 
