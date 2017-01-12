@@ -4,18 +4,11 @@ import datetime as dt
 import numpy as np
 import pandas as pd
 
-
-# http://cdec.water.ca.gov/cgi-progs/queryCSV
-# ?station_id=hth
-# &sensor_num=15
-# &dur_code=D
-# &start_date=2016-12-01
-# &end_date=2016-12-27
-# &data_wish=View+CSV+Data
-DATA_URL = 'http://cdec.water.ca.gov/cgi-progs/queryCSV'
+from waterbot import config
 
 
-def get_reservoir_storage(station_id, sensor_num=15, dur_code='D', start_date=None, end_date=None):
+def get_reservoir_storage(
+	station_id, sensor_num=15, dur_code='D', start_date=None, end_date=None):
 	"""
 
 	"""
@@ -38,7 +31,7 @@ def get_reservoir_storage(station_id, sensor_num=15, dur_code='D', start_date=No
 		data_wish='View CSV Data'
 	)
 
-	r = requests.get(DATA_URL, params=payload)
+	r = requests.get(config.RESERVOIR_DATA_URL, params=payload)
 	csv_str = io.StringIO(r.text)
 
 	df = pd.read_csv(

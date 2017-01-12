@@ -7,10 +7,7 @@ import requests
 import datetime as dt
 import pandas as pd
 
-from waterbot import models, util, twitter, water_api
-
-
-AVERAGE_DIR = 'seasonal_averages'
+from waterbot import config, models, util, twitter, water_api
 
 
 def update_reservoir_storage(reservoir):
@@ -86,7 +83,7 @@ def tweet_changes(reservoir):
 
 	day_of_year = last_measure.date.timetuple().tm_yday
 	seasonal_avg_fn = os.path.join(
-		AVERAGE_DIR,
+		config.SEASONA_AVERAGE_DIR,
 		'{station_id}.csv'.format(station_id=reservoir.station_id)
 	)
 	seasonal_avg = pd.read_csv(seasonal_avg_fn, index_col=0)

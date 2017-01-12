@@ -7,20 +7,19 @@ import json
 import datetime as dt
 import pandas as pd
 
-from waterbot import water_api
+from waterbot import config, water_api
 
 
 START_DATE 	= dt.date(1990, 1, 1)
 END_DATE	= dt.date(2016, 12, 31)
-DIRECTORY 	= 'historical_levels'
 
 
 if __name__ == '__main__':
 
-	if not os.path.exists(DIRECTORY):
-	    os.makedirs(DIRECTORY)
+	if not os.path.exists(config.HISTORICAL_LEVELS_DIR):
+	    os.makedirs(config.HISTORICAL_LEVELS_DIR)
 
-	reservoirs = json.load(open('reservoirs_all.json'))
+	reservoirs = json.load(open(config.ALL_RESERVOIR_LIST))
 
 	for reservoir in reservoirs:
 		df = water_api.get_reservoir_storage(
@@ -31,7 +30,7 @@ if __name__ == '__main__':
 
 		df.to_csv(
 			os.path.join(
-				DIRECTORY,
+				config.HISTORICAL_LEVELS_DIR,
 				'{station_id}.csv'.format(
 					station_id=reservoir['station_id'])
 			),

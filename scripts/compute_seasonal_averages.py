@@ -7,30 +7,29 @@ import json
 import datetime as dt
 import pandas as pd
 
+from waterbot import config
 
 
 START_DATE 	= dt.date(1990, 1, 1)
 END_DATE	= dt.date(2010, 12, 31)
-LEVELS_DIR	= 'historical_levels'
-AVERAGE_DIR = 'seasonal_averages'
 
 
 if __name__ == '__main__':
 
-	if not os.path.exists(AVERAGE_DIR):
-	    os.makedirs(AVERAGE_DIR)
+	if not os.path.exists(config.SEASONA_AVERAGE_DIR):
+	    os.makedirs(config.SEASONA_AVERAGE_DIR)
 
-	reservoirs = json.load(open('reservoirs.json'))
+	reservoirs = json.load(open(config.ALL_RESERVOIR_LIST))
 
 	for reservoir in reservoirs:
 
 		station_id = reservoir['station_id']
 		infile = os.path.join(
-			LEVELS_DIR,
+			config.HISTORICAL_LEVELS_DIR,
 			'{station_id}.csv'.format(station_id=station_id)
 		)
 		outfile = os.path.join(
-			AVERAGE_DIR,
+			config.SEASONA_AVERAGE_DIR,
 			'{station_id}.csv'.format(station_id=station_id)
 		)
 
@@ -54,4 +53,4 @@ if __name__ == '__main__':
 
 		seasonal_avg.to_csv(outfile, index=False)
 
-		print reservoir['station_id']
+		print reservoir['station_id'], 
