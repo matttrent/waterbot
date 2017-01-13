@@ -11,7 +11,7 @@ from waterbot import config, water_api
 
 
 START_DATE 	= dt.date(1990, 1, 1)
-END_DATE	= dt.date(2016, 12, 31)
+END_DATE	= dt.date.today()
 
 
 if __name__ == '__main__':
