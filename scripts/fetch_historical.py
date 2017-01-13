@@ -3,6 +3,7 @@
 
 import os
 import json
+import requests
 
 import datetime as dt
 import pandas as pd
@@ -22,11 +23,20 @@ if __name__ == '__main__':
 	reservoirs = json.load(open(config.ALL_RESERVOIR_LIST))
 
 	for reservoir in reservoirs:
-		df = water_api.get_reservoir_storage(
-			station_id=reservoir['station_id'],
-			start_date=START_DATE,
-			end_date=END_DATE
-		)
+
+		print reservoir['station_id'],
+
+		keep_trying = True
+		while keep_trying:
+			try:
+				df = water_api.get_reservoir_storage(
+					station_id=reservoir['station_id'],
+					start_date=START_DATE,
+					end_date=END_DATE
+				)
+				keep_trying = False
+			except requests.exceptions.ConnectionError:
+				print '.',
 
 		df.to_csv(
 			os.path.join(
@@ -37,4 +47,4 @@ if __name__ == '__main__':
 			index=False
 		)
 
-		print reservoir['station_id']
+		print
