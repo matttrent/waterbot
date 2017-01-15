@@ -11,10 +11,6 @@ import pandas as pd
 from waterbot import config, water_api
 
 
-START_DATE 	= dt.date(1990, 1, 1)
-END_DATE	= dt.date.today()
-
-
 if __name__ == '__main__':
 
 	if not os.path.exists(config.HISTORICAL_LEVELS_DIR):
@@ -31,8 +27,8 @@ if __name__ == '__main__':
 			try:
 				df = water_api.get_reservoir_storage(
 					station_id=reservoir['station_id'],
-					start_date=START_DATE,
-					end_date=END_DATE
+					start_date=HISTORICAL_START_DATE,
+					end_date=HISTORICAL_END_DATE
 				)
 				keep_trying = False
 			except requests.exceptions.ConnectionError:

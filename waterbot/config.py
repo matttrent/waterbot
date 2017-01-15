@@ -1,10 +1,17 @@
 import os
+import datetime as dt
 
 
 DATA_DIR 				= 'data'
 
+HISTORICAL_START_DATE 	= dt.date(1990, 1, 1)
+HISTORICAL_END_DATE		= dt.date.today()
+SEASONAL_START_DATE 	= dt.date(1990, 1, 1)
+SEASONAL_END_DATE		= dt.date(2010, 12, 31)
+
+
 HISTORICAL_LEVELS_DIR 	= os.path.join(DATA_DIR, 'historical_levels')
-SEASONA_AVERAGE_DIR 	= os.path.join(DATA_DIR, 'seasonal_averages')
+SEASONAL_AVERAGE_DIR 	= os.path.join(DATA_DIR, 'seasonal_averages')
 
 PRIMARY_RESERVOIR_LIST 	= 'reservoirs.json'
 ALL_RESERVOIR_LIST 		= 'reservoirs_all.json'
