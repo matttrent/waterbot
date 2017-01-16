@@ -22,6 +22,7 @@ if __name__ == '__main__':
 
 		print reservoir['station_id'],
 
+		# fetch reservoir data, reattempting until success
 		keep_trying = True
 		while keep_trying:
 			try:
@@ -34,13 +35,11 @@ if __name__ == '__main__':
 			except requests.exceptions.ConnectionError:
 				print '.',
 
-		df.to_csv(
-			os.path.join(
-				config.HISTORICAL_LEVELS_DIR,
-				'{station_id}.csv'.format(
-					station_id=reservoir['station_id'])
-			),
-			index=False
+		outfile = os.path.join(
+			config.HISTORICAL_LEVELS_DIR,
+			'{station_id}.csv'.format(
+				station_id=reservoir['station_id'])
 		)
+		df.to_csv(outfile, index=False)
 
 		print

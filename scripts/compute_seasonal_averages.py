@@ -48,7 +48,6 @@ def compute_aggregate(reservoirs,
 
     state_total = seasonal.daily_state_totals(
         reservoirs, start_date, end_date)
-
     seasonal_stats = seasonal.day_of_year_stats(state_total)
 
     outfile = os.path.join(
@@ -62,11 +61,13 @@ if __name__ == '__main__':
     if not os.path.exists(config.SEASONAL_AVERAGE_DIR):
         os.makedirs(config.SEASONAL_AVERAGE_DIR)
 
+    # load and clean data
     reservoirs = load_reservoirs()
     cleaned_reservoirs = {
         station_id: seasonal.clean_data(reservoir, station_id)
         for station_id, reservoir in reservoirs.items()
     }
 
+    # compute reservoir stats
     compute_individuals(cleaned_reservoirs)
     compute_aggregate(cleaned_reservoirs)

@@ -10,6 +10,7 @@ from waterbot import config
 
 if __name__ == '__main__':
 
+	# read html table from site and coerce into dataframe
 	df = pd.read_html(
 		config.RESERVOIR_LIST_URL,
 		header=0,
@@ -17,6 +18,7 @@ if __name__ == '__main__':
 		)[0]
 	df = df.dropna()
 
+	# loop across all reservoir rows, create info dict
 	reservoirs = []
 	for idx, ser in df.iterrows():
 
@@ -28,5 +30,6 @@ if __name__ == '__main__':
 		}
 		reservoirs.append(d)
 
+	# save to json
 	with open(config.ALL_RESERVOIR_LIST, 'w') as outfile:
 		json.dump(reservoirs, outfile, indent=4, separators=(',', ': '))
