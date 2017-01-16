@@ -16,6 +16,8 @@ SEASONAL_AVERAGE_DIR 	= os.path.join(DATA_DIR, 'seasonal_averages')
 PRIMARY_RESERVOIR_LIST 	= 'reservoirs.json'
 ALL_RESERVOIR_LIST 		= 'reservoirs_all.json'
 
+STATE_STATISTICS        = 'california.csv'
+
 RESERVOIR_LIST_URL 		= 'http://cdec.water.ca.gov/cgi-progs/reservoirs/RES'
 
 # http://cdec.water.ca.gov/cgi-progs/queryCSV
