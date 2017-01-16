@@ -11,6 +11,13 @@ import pandas as pd
 from waterbot import config
 
 
+def constrain_date_range(df, start_date, end_date):
+    return df[
+          (df.date >= start_date)
+        & (df.date <= end_date)
+    ]
+
+
 def clean_data(df, station_id, 
     start_date=config.SEASONAL_START_DATE, 
     end_date=config.SEASONAL_END_DATE):
@@ -19,10 +26,7 @@ def clean_data(df, station_id,
     
     # constrain to date range, get rid of unneeded columns
     df = (
-        df[
-              (df.date >= start_date)
-            & (df.date <= end_date)
-        ]
+        constrain_date_range(df, start_date, end_date)
         .drop('time', axis=1)
         .copy()
     )
@@ -56,15 +60,15 @@ def clean_data(df, station_id,
 def individual_average(df, 
     start_date=config.SEASONAL_START_DATE, 
     end_date=config.SEASONAL_END_DATE):
+    
+    # constrain to date range
+    df = constrain_date_range(df, start_date, end_date)
 
-    df =  df[
-          (df.date >= start_date)
-        & (df.date <= end_date)
-    ]
-
+    # compute day of year for each date
     df['day_of_year'] = df.date.apply(
         lambda x: x.timetuple().tm_yday)
 
+    # average across all dates for each day of year
     seasonal_avg = (
         df
         .groupby('day_of_year', as_index=False)
@@ -81,12 +85,10 @@ def daily_state_totals(reservoirs,
 
     all_res = pd.concat(reservoirs.values())
 
+    # constrain to date range
+    # sum across all reservoirs for a given date
     state_total = (
-        all_res
-        [
-              (all_res.date >= start_date)
-            & (all_res.date <= end_date)
-        ]
+        constrain_date_range(all_res, start_date, end_date)
         .groupby('date')
         .agg({
             'reservoir_storage': 'sum',
@@ -94,6 +96,7 @@ def daily_state_totals(reservoirs,
         .reset_index()
     )
 
+    # compute day of year for each date
     state_total['day_of_year'] = state_total.date.apply(
         lambda d: d.timetuple().tm_yday
     )
@@ -103,6 +106,7 @@ def daily_state_totals(reservoirs,
 
 def day_of_year_stats(state_total):
 
+    # group by day of year and compute percentiles
     return (
         state_total
         .groupby('day_of_year')
