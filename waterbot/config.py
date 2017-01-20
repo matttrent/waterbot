@@ -7,7 +7,7 @@ DATA_DIR 				= 'data'
 HISTORICAL_START_DATE 	= dt.date(1990, 1, 1)
 HISTORICAL_END_DATE		= dt.date.today()
 SEASONAL_START_DATE 	= dt.date(1990, 1, 1)
-SEASONAL_END_DATE		= dt.date(2010, 12, 31)
+SEASONAL_END_DATE		= dt.date(2009, 12, 31)
 
 
 HISTORICAL_LEVELS_DIR 	= os.path.join(DATA_DIR, 'historical_levels')

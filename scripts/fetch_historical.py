@@ -28,8 +28,8 @@ if __name__ == '__main__':
 			try:
 				df = water_api.get_reservoir_storage(
 					station_id=reservoir['station_id'],
-					start_date=HISTORICAL_START_DATE,
-					end_date=HISTORICAL_END_DATE
+					start_date=config.HISTORICAL_START_DATE,
+					end_date=config.HISTORICAL_END_DATE
 				)
 				keep_trying = False
 			except requests.exceptions.ConnectionError:

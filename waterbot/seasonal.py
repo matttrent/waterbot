@@ -15,7 +15,7 @@ def constrain_date_range(df, start_date, end_date):
     return df[
           (df.date >= start_date)
         & (df.date <= end_date)
-    ]
+    ].copy()
 
 
 def clean_data(df, station_id, 
@@ -49,12 +49,16 @@ def clean_data(df, station_id,
     ] = np.nan
     
     # set station_id
-    df['station_id'] = station_id
-    
-    to_fill = to_fill.interpolate()
-    to_fill.index.name = 'date'
+    to_fill['station_id'] = station_id
 
-    return to_fill.reset_index()
+    # interpolate values    
+    to_fill = to_fill.interpolate().fillna(0)
+
+    # complete index
+    to_fill.index.name = 'date'
+    to_fill = to_fill.reset_index()
+
+    return to_fill
 
 
 def individual_average(df, 
