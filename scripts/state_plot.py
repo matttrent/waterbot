@@ -91,12 +91,13 @@ if __name__ == '__main__':
     fig, ax = plt.subplots(1, figsize=(8,8))
 
     min_level = .85 * min( plot_df.reservoir_storage.min(), plot_df.lo.min() )
-    max_level = 1.1 * max( plot_df.reservoir_storage.max(), plot_df.hi.max() )
+    max_level = 1.1 * max( plot_df.reservoir_storage.max(), plot_df.whoa.max() )
 
     ax.fill_between(plot_df.index, min_level, plot_df.lo, facecolor='red', alpha=0.4, linewidth=0)
     ax.fill_between(plot_df.index, plot_df.lo, plot_df.mid, facecolor='yellow', alpha=0.4, linewidth=0)
     ax.fill_between(plot_df.index, plot_df.mid, plot_df.hi, facecolor='#55cc00', alpha=0.4, linewidth=0)
-    ax.fill_between(plot_df.index, plot_df.hi, max_level, facecolor='green', alpha=0.4, linewidth=0)
+    ax.fill_between(plot_df.index, plot_df.hi, plot_df.whoa, facecolor='green', alpha=0.4, linewidth=0)
+    ax.fill_between(plot_df.index, plot_df.whoa, max_level, facecolor='teal', alpha=0.4, linewidth=0)
 
     plt.plot(
         plot_df[ plot_df.index <= pd.Timestamp(today) ].index,
@@ -109,8 +110,8 @@ if __name__ == '__main__':
     plt.ylim( min_level, max_level )
 
     plt.yticks(
-        plot_df.iloc[0][['lo', 'mid', 'hi']],
-        ['{}th percentile'.format(y) for y in [20, 40, 60]]
+        plot_df.iloc[0][['lo', 'mid', 'hi', 'whoa']],
+        ['{}th percentile'.format(y) for y in [20, 40, 60, 80]]
     )
 
     fig.savefig('test.png')

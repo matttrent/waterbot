@@ -119,5 +119,6 @@ def day_of_year_stats(state_total):
             'lo':   lambda x: np.percentile(x, 20),
             'mid':  lambda x: np.percentile(x, 40),
             'hi':   lambda x: np.percentile(x, 60),
+            'whoa': lambda x: np.percentile(x, 80),
         })
     )
