@@ -4,6 +4,7 @@
 import os
 import glob
 import json
+import tempfile
 import requests
 
 import datetime as dt
@@ -13,44 +14,41 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from waterbot import config, water_api, seasonal
+from waterbot import config, water_api, seasonal, twitter
 
 
 sns.set_style('white')
 
 
-if __name__ == '__main__':
-    
-    today = dt.date.today()
-    first_day = today - dt.timedelta(days=60)
-    last_day  = today + dt.timedelta(days=30)
+def fetch_reservoir_data(reservoirs, today, first_day, last_day):
 
-    reservoirs = json.load(open(config.ALL_RESERVOIR_LIST))
-
-    dfs = {}
-    for reservoir in reservoirs:
-        station_id = reservoir['station_id']
-        # print station_id,
-
-        keep_trying = True
-        while keep_trying:
-            try:
-                df = water_api.fetch_reservoir_storage(
-                    station_id=station_id,
-                    start_date=first_day,
-                    end_date=today
-                )
-                keep_trying = False
-            except requests.exceptions.ConnectionError:
-                pass
-                # print '.',
-        
-        dfs[station_id] = df
-        # print
-
+    dfs = water_api.fetch_all_reservoirs(
+        reservoirs, first_day, today)
     dfc = seasonal.daily_state_totals(
-        dfs, first_day, today
+        dfs, first_day, today)
+
+    return dfc
+
+
+def load_seasonal_data():
+
+    infile = os.path.join(
+        config.SEASONAL_AVERAGE_DIR,
+        config.STATE_STATISTICS)
+    seasonal = pd.read_csv(infile, index_col='day_of_year')
+
+    seasonal = (
+        seasonal
+        [seasonal.index <= 365]
+        .copy()
+        .rolling(5, center=True)
+        .mean()
     )
+
+    return seasonal
+
+
+def create_plot_data(dfc, seasonal, first_day, last_day):
 
     dates = pd.Series( pd.date_range(first_day, last_day, freq='D') )
 
@@ -64,29 +62,21 @@ if __name__ == '__main__':
         lambda d: d.timetuple().tm_yday
     )
 
-    infile = os.path.join(
-        config.SEASONAL_AVERAGE_DIR,
-        config.STATE_STATISTICS)
-    shades = pd.read_csv(infile, index_col='day_of_year')
-
-    shades2 = (
-        shades
-        [shades.index <= 365]
-        .copy()
-        .rolling(5, center=True)
-        .mean()
-    )
-
     plot_df = (
         pd.merge(
             plot_df,
-            shades2,
+            seasonal,
             how='left',
             left_on='day_of_year',
             right_index=True
         )
         .interpolate()
     )
+
+    return plot_df
+
+
+def plot_figure(plot_df):
 
     fig, ax = plt.subplots(1, figsize=(8,8))
 
@@ -114,4 +104,34 @@ if __name__ == '__main__':
         ['{}th percentile'.format(y) for y in [20, 40, 60, 80]]
     )
 
-    fig.savefig('test.png')
+    return fig
+
+
+if __name__ == '__main__':
+    
+    today = dt.date.today()
+    first_day = today - dt.timedelta(days=60)
+    last_day  = today + dt.timedelta(days=30)
+
+    reservoirs = json.load(open(config.ALL_RESERVOIR_LIST))
+
+    dfc = fetch_reservoir_data(reservoirs, today, first_day, last_day)
+    seasonal = load_seasonal_data()
+
+    plot_df = create_plot_data(dfc, seasonal, first_day, last_day)
+
+    fig = plot_figure(plot_df)
+
+    fnum, filename = tempfile.mkstemp(suffix='.png')
+    print filename
+
+    # if util.environment() == 'production'
+    if True:
+        twapi = twitter.get_api()
+        fig.savefig(filename)
+        twapi.update_with_media(
+            filename,
+            'Total California reservoir water compared to historical levels.'
+        )
+    else:
+        fig.savefig('test.png')

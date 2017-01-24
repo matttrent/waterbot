@@ -45,3 +45,30 @@ def fetch_reservoir_storage(
 	df = df[df.reservoir_storage >= 100]
 
 	return df
+
+
+def fetch_all_reservoirs(
+	reservoirs,
+	start_date=config.HISTORICAL_START_DATE,
+	end_date=config.HISTORICAL_END_DATE):
+
+	results = {}
+	for reservoir in reservoirs:
+		station_id = reservoir['station_id']
+
+		# fetch reservoir data, reattempting until success
+		keep_trying = True
+		while keep_trying:
+			try:
+				df = fetch_reservoir_storage(
+					station_id=station_id,
+					start_date=start_date,
+					end_date=end_date
+				)
+				keep_trying = False
+			except requests.exceptions.ConnectionError:
+				pass
+ 
+		results[station_id] = df
+
+	return results

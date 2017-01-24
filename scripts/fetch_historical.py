@@ -18,28 +18,13 @@ if __name__ == '__main__':
 
 	reservoirs = json.load(open(config.ALL_RESERVOIR_LIST))
 
-	for reservoir in reservoirs:
+	results = water_api.fetch_all_reservoirs(reservoirs)
 
-		print reservoir['station_id'],
-
-		# fetch reservoir data, reattempting until success
-		keep_trying = True
-		while keep_trying:
-			try:
-				df = water_api.fetch_reservoir_storage(
-					station_id=reservoir['station_id'],
-					start_date=config.HISTORICAL_START_DATE,
-					end_date=config.HISTORICAL_END_DATE
-				)
-				keep_trying = False
-			except requests.exceptions.ConnectionError:
-				print '.',
+	for station_id, df in results.items():
 
 		outfile = os.path.join(
 			config.HISTORICAL_LEVELS_DIR,
 			'{station_id}.csv'.format(
-				station_id=reservoir['station_id'])
+				station_id=station_id)
 		)
 		df.to_csv(outfile, index=False)
-
-		print
