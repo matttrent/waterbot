@@ -26,7 +26,7 @@ if __name__ == '__main__':
 		keep_trying = True
 		while keep_trying:
 			try:
-				df = water_api.get_reservoir_storage(
+				df = water_api.fetch_reservoir_storage(
 					station_id=reservoir['station_id'],
 					start_date=config.HISTORICAL_START_DATE,
 					end_date=config.HISTORICAL_END_DATE

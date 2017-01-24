@@ -7,7 +7,7 @@ import pandas as pd
 from waterbot import config
 
 
-def get_reservoir_storage(
+def fetch_reservoir_storage(
 	station_id, sensor_num=15, dur_code='D', start_date=None, end_date=None):
 	"""
 

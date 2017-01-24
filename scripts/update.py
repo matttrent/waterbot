@@ -13,7 +13,7 @@ from waterbot import config, models, util, twitter, water_api
 def update_reservoir_storage(reservoir):
 
 	try:
-		storage_df = water_api.get_reservoir_storage(
+		storage_df = water_api.fetch_reservoir_storage(
 			station_id=reservoir.station_id)
 	except requests.ConnectionError:
 		return

@@ -35,7 +35,7 @@ if __name__ == '__main__':
         keep_trying = True
         while keep_trying:
             try:
-                df = water_api.get_reservoir_storage(
+                df = water_api.fetch_reservoir_storage(
                     station_id=station_id,
                     start_date=first_day,
                     end_date=today
