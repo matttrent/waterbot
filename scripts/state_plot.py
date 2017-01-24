@@ -10,11 +10,15 @@ import requests
 import datetime as dt
 import numpy as np
 import pandas as pd
+
+from waterbot import config, water_api, seasonal, twitter, util
+
 import matplotlib as mpl
+if util.environment() == 'production':
+    mpl.use('Agg')
+
 import matplotlib.pyplot as plt
 import seaborn as sns
-
-from waterbot import config, water_api, seasonal, twitter
 
 
 sns.set_style('white')
@@ -125,8 +129,7 @@ if __name__ == '__main__':
     fnum, filename = tempfile.mkstemp(suffix='.png')
     print filename
 
-    # if util.environment() == 'production'
-    if True:
+    if util.environment() == 'production':
         twapi = twitter.get_api()
         fig.savefig(filename)
         twapi.update_with_media(

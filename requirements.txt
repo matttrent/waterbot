@@ -1,9 +1,11 @@
 arnold==0.4.1
 gunicorn==19.6.0
 numpy==1.11.3
+matplotlib==1.5.3
 pandas==0.19.2
 peewee==2.8.5
 psycopg2==2.6.2
 requests==2.12.4
+seaborn==0.7.1
 tweepy==3.5.0
 -e .
