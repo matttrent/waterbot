@@ -24,12 +24,16 @@ import seaborn as sns
 sns.set_style('white')
 
 
-def fetch_reservoir_data(reservoirs, today, first_day, last_day):
+def fetch_reservoir_data(reservoirs, first_day, today):
 
     dfs = water_api.fetch_all_reservoirs(
         reservoirs, first_day, today)
+
+    for res_name in dfs.keys():
+        dfs[res_name] = seasonal.forwardfill_missing_dates(dfs[res_name]) 
+
     dfc = seasonal.daily_state_totals(
-        dfs, first_day, today)
+        dfs, first_day, today, concat=True)
 
     return dfc
 
@@ -119,7 +123,7 @@ if __name__ == '__main__':
 
     reservoirs = json.load(open(config.ALL_RESERVOIR_LIST))
 
-    dfc = fetch_reservoir_data(reservoirs, today, first_day, last_day)
+    dfc = fetch_reservoir_data(reservoirs, first_day, today)
     seasonal = load_seasonal_data()
 
     plot_df = create_plot_data(dfc, seasonal, first_day, last_day)

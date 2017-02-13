@@ -61,6 +61,26 @@ def clean_data(df, station_id,
     return to_fill
 
 
+def forwardfill_missing_dates(df):
+
+    min_date = df.date.min()
+    max_date = df.date.max()
+
+    all_dates = pd.Series( pd.date_range(min_date, max_date, freq='D') )
+    all_dates.name = 'date'
+
+    to_fill = (
+        df
+        .set_index('date')
+        .reindex(all_dates)
+    )
+
+    filled = to_fill.fillna(method='ffill')
+    filled = filled.reset_index()
+
+    return filled
+
+
 def individual_average(df, 
     start_date=config.SEASONAL_START_DATE, 
     end_date=config.SEASONAL_END_DATE):
@@ -85,9 +105,12 @@ def individual_average(df,
 
 def daily_state_totals(reservoirs, 
     start_date=config.SEASONAL_START_DATE, 
-    end_date=config.SEASONAL_END_DATE):
+    end_date=config.SEASONAL_END_DATE,
+    concat=False):
 
-    all_res = pd.concat(reservoirs.values())
+    all_res = reservoirs
+    if concat:
+        all_res = pd.concat(all_res.values())
 
     # constrain to date range
     # sum across all reservoirs for a given date
