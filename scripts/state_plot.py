@@ -112,6 +112,8 @@ def plot_figure(plot_df):
         ['{}th percentile'.format(y) for y in [20, 40, 60, 80]]
     )
 
+    plt.subplots_adjust(left=.15, bottom=.15, right=.95, top=.95)
+
     return fig
 
 
