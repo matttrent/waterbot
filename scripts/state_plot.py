@@ -29,8 +29,12 @@ def fetch_reservoir_data(reservoirs, first_day, today):
     dfs = water_api.fetch_all_reservoirs(
         reservoirs, first_day, today)
 
+    start_date = min([df.date.min() for df in dfs.values()])
+    end_date   = max([df.date.max() for df in dfs.values()])
+
     for res_name in dfs.keys():
-        dfs[res_name] = seasonal.forwardfill_missing_dates(dfs[res_name]) 
+        dfs[res_name] = seasonal.forwardfill_missing_dates(
+            dfs[res_name], start_date, end_date) 
 
     dfc = seasonal.daily_state_totals(
         dfs, first_day, today, concat=True)

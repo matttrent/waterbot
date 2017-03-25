@@ -61,12 +61,15 @@ def clean_data(df, station_id,
     return to_fill
 
 
-def forwardfill_missing_dates(df):
+def forwardfill_missing_dates(df, start_date=None, end_date=None):
 
-    min_date = df.date.min()
-    max_date = df.date.max()
+    if not start_date:
+        start_date = df.date.min()
 
-    all_dates = pd.Series( pd.date_range(min_date, max_date, freq='D') )
+    if not end_date:
+        end_date = df.date.max()
+
+    all_dates = pd.Series( pd.date_range(start_date, end_date, freq='D') )
     all_dates.name = 'date'
 
     to_fill = (
