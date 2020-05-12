@@ -1,232 +1,237 @@
 [
     {
-        "capacity": 2447650,
+        "station_id": "cle",
         "name": "trinity lake",
-        "station_id": "cle"
+        "capacity": 2447650
     },
     {
-        "capacity": 241100,
+        "station_id": "whi",
         "name": "whiskeytown",
-        "station_id": "whi"
+        "capacity": 241100
     },
     {
-        "capacity": 14660,
+        "station_id": "lew",
         "name": "lewiston",
-        "station_id": "lew"
+        "capacity": 14660
     },
     {
-        "capacity": 381000,
+        "station_id": "wrs",
         "name": "sonoma(warm springs)",
-        "station_id": "wrs"
+        "capacity": 381000
     },
     {
-        "capacity": 122400,
+        "station_id": "coy",
         "name": "mendocino (coyote)",
-        "station_id": "coy"
+        "capacity": 122400
     },
     {
-        "capacity": 4552000,
+        "station_id": "sha",
         "name": "shasta",
-        "station_id": "sha"
+        "capacity": 4552000
     },
     {
-        "capacity": 23772,
+        "station_id": "kes",
         "name": "keswick",
-        "station_id": "kes"
+        "capacity": 23772
     },
     {
-        "capacity": 3537577,
+        "station_id": "oro",
         "name": "oroville",
-        "station_id": "oro"
+        "capacity": 3537577
     },
     {
-        "capacity": 22566,
+        "station_id": "ant",
         "name": "antelope",
-        "station_id": "ant"
+        "capacity": 22566
     },
     {
-        "capacity": 55477,
+        "station_id": "frd",
         "name": "frenchman",
-        "station_id": "frd"
+        "capacity": 55477
     },
     {
-        "capacity": 83000,
+        "station_id": "dav",
         "name": "lake davis",
-        "station_id": "dav"
+        "capacity": 83000
     },
     {
-        "capacity": 966000,
+        "station_id": "bul",
         "name": "bullards bar",
-        "station_id": "bul"
+        "capacity": 966000
     },
     {
-        "capacity": 70000,
+        "station_id": "eng",
         "name": "englebright",
-        "station_id": "eng"
+        "capacity": 70000
     },
     {
-        "capacity": 977000,
+        "station_id": "fol",
         "name": "folsom",
-        "station_id": "fol"
+        "capacity": 977000
     },
     {
-        "capacity": 266369,
+        "station_id": "unv",
         "name": "union valley",
-        "station_id": "unv"
+        "capacity": 266369
     },
     {
-        "capacity": 69306,
+        "station_id": "lon",
         "name": "loon lake",
-        "station_id": "lon"
+        "capacity": 69306
     },
     {
-        "capacity": 43496,
+        "station_id": "ich",
         "name": "ice house",
-        "station_id": "ich"
+        "capacity": 43496
     },
     {
-        "capacity": 9000,
+        "station_id": "nat",
         "name": "nimbus",
-        "station_id": "nat"
+        "capacity": 9000
     },
     {
-        "capacity": 300000,
+        "station_id": "inv",
         "name": "indian valley",
-        "station_id": "inv"
+        "capacity": 300000
     },
     {
-        "capacity": 143700,
+        "station_id": "ber",
+        "name": "berryessa",
+        "capacity": 1602000
+    },
+    {
+        "station_id": "blb",
         "name": "black butte",
-        "station_id": "blb"
+        "capacity": 143700
     },
     {
-        "capacity": 317000,
+        "station_id": "nhg",
         "name": "new hogan",
-        "station_id": "nhg"
+        "capacity": 317000
     },
     {
-        "capacity": 417120,
+        "station_id": "cmn",
         "name": "camanche",
-        "station_id": "cmn"
+        "capacity": 417120
     },
     {
-        "capacity": 203795,
+        "station_id": "par",
         "name": "pardee",
-        "station_id": "par"
+        "capacity": 203795
     },
     {
-        "capacity": 64320,
+        "station_id": "don",
         "name": "donnell's",
-        "station_id": "don"
+        "capacity": 64320
     },
     {
-        "capacity": 97800,
+        "station_id": "brd",
         "name": "beardsley",
-        "station_id": "brd"
+        "capacity": 97800
     },
     {
-        "capacity": 67000,
+        "station_id": "tul",
         "name": "tulloch",
-        "station_id": "tul"
+        "capacity": 67000
     },
     {
-        "capacity": 2400000,
+        "station_id": "nml",
         "name": "new melones",
-        "station_id": "nml"
+        "capacity": 2400000
     },
     {
-        "capacity": 2030000,
+        "station_id": "dnp",
         "name": "don pedro",
-        "station_id": "dnp"
+        "capacity": 2030000
     },
     {
-        "capacity": 360000,
+        "station_id": "hth",
         "name": "hetch hetchy",
-        "station_id": "hth"
+        "capacity": 360000
     },
     {
-        "capacity": 273500,
+        "station_id": "chv",
         "name": "cherry valley",
-        "station_id": "chv"
+        "capacity": 273500
     },
     {
-        "capacity": 1024600,
+        "station_id": "exc",
         "name": "mc clure (exchequer)",
-        "station_id": "exc"
+        "capacity": 1024600
     },
     {
-        "capacity": 150000,
+        "station_id": "buc",
         "name": "eastman (buchanan)",
-        "station_id": "buc"
+        "capacity": 150000
     },
     {
-        "capacity": 90000,
+        "station_id": "hid",
         "name": "hensley (hidden)",
-        "station_id": "hid"
+        "capacity": 90000
     },
     {
-        "capacity": 520500,
+        "station_id": "mil",
         "name": "millerton (friant)",
-        "station_id": "mil"
+        "capacity": 520500
     },
     {
-        "capacity": 2041000,
+        "station_id": "snl",
         "name": "san luis",
-        "station_id": "snl"
+        "capacity": 2041000
     },
     {
-        "capacity": 1000000,
+        "station_id": "pnf",
         "name": "pine flat",
-        "station_id": "pnf"
+        "capacity": 1000000
     },
     {
-        "capacity": 185600,
+        "station_id": "trm",
         "name": "kaweah (terminus)",
-        "station_id": "trm"
+        "capacity": 185600
     },
     {
-        "capacity": 82300,
+        "station_id": "scc",
         "name": "success",
-        "station_id": "scc"
+        "capacity": 82300
     },
     {
-        "capacity": 568000,
+        "station_id": "isb",
         "name": "isabella",
-        "station_id": "isb"
+        "capacity": 568000
     },
     {
-        "capacity": 226500,
+        "station_id": "stp",
         "name": "stampede",
-        "station_id": "stp"
+        "capacity": 226500
     },
     {
-        "capacity": 17295,
+        "station_id": "inp",
         "name": "independence lake",
-        "station_id": "inp"
+        "capacity": 17295
     },
     {
-        "capacity": 9700,
+        "station_id": "dnn",
         "name": "donner lake",
-        "station_id": "dnn"
+        "capacity": 9700
     },
     {
-        "capacity": 205000,
+        "station_id": "cch",
         "name": "cachuma lake",
-        "station_id": "cch"
+        "capacity": 193305
     },
     {
-        "capacity": 180000,
+        "station_id": "pym",
         "name": "pyramid",
-        "station_id": "pym"
+        "capacity": 180000
     },
     {
-        "capacity": 325000,
+        "station_id": "cas",
         "name": "castaic",
-        "station_id": "cas"
+        "capacity": 325000
     },
     {
-        "capacity": 131452,
+        "station_id": "prr",
         "name": "lake perris",
-        "station_id": "prr"
+        "capacity": 131452
     }
 ]

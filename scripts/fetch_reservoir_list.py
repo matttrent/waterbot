@@ -14,9 +14,16 @@ if __name__ == '__main__':
 	df = pd.read_html(
 		config.RESERVOIR_LIST_URL,
 		header=0,
-		skiprows=[0, 2]
+		skiprows=[0]
 		)[0]
 	df = df.dropna()
+
+	# discard rows indicating the region, as defined by the reservoir name
+	# being present in other columns
+	df = df[
+		(df["Reservoir Name"] != df["Capacity(AF)"]) &
+		(df["StaID"].apply(len) == 3)
+	]
 
 	# loop across all reservoir rows, create info dict
 	reservoirs = []

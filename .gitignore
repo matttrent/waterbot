@@ -6,3 +6,5 @@ build
 .env
 .ipynb_checkpoints
 *.egg-info
+.mypy_cache
+.idea
