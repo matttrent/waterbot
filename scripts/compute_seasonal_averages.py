@@ -20,26 +20,26 @@ def load_reservoirs(reservoir_filename=config.ALL_RESERVOIR_LIST):
         station_id = reservoir['station_id']
         infile = os.path.join(
             config.HISTORICAL_LEVELS_DIR,
-            '{station_id}.csv'.format(station_id=station_id)
+            '{station_id}.json'.format(station_id=station_id)
         )
-        reservoir_map[station_id] = pd.read_csv(infile, parse_dates=['date'])
+        reservoir_map[station_id] = pd.read_json(infile, orient="records")
 
     return reservoir_map
 
 
 def compute_individuals(reservoirs):
 
-    for station_id, df in reservoirs.iteritems():
+    for station_id, df in reservoirs.items():
 
         seasonal_avg = seasonal.individual_average(df)
 
         outfile = os.path.join(
             config.SEASONAL_AVERAGE_DIR,
-            '{station_id}.csv'.format(station_id=station_id)
+            '{station_id}.json'.format(station_id=station_id)
         )
-        seasonal_avg.to_csv(outfile, index=False)
+        seasonal_avg.to_json(outfile, orient="records")
 
-        print station_id, 
+        print(station_id, end=" ")
 
 
 def compute_aggregate(reservoirs, 
@@ -47,13 +47,17 @@ def compute_aggregate(reservoirs,
     end_date=config.SEASONAL_END_DATE):
 
     state_total = seasonal.daily_state_totals(
-        reservoirs, start_date, end_date)
-    seasonal_stats = seasonal.day_of_year_stats(state_total)
+        reservoirs, start_date, end_date, concat=True)
+    outfile = os.path.join(
+        config.HISTORICAL_LEVELS_DIR,
+        config.STATE_STATISTICS)
+    state_total.to_json(outfile, orient="records")
 
+    seasonal_stats = seasonal.day_of_year_stats(state_total)
     outfile = os.path.join(
         config.SEASONAL_AVERAGE_DIR,
         config.STATE_STATISTICS)
-    seasonal_stats.to_csv(outfile)
+    seasonal_stats.to_json(outfile, orient="records")
 
 
 if __name__ == '__main__':

@@ -13,8 +13,8 @@ from waterbot import config
 
 def constrain_date_range(df, start_date, end_date):
     return df[
-          (df.date >= start_date)
-        & (df.date <= end_date)
+          (df.date >= pd.to_datetime(start_date))
+        & (df.date <= pd.to_datetime(end_date))
     ].copy()
 
 
@@ -27,7 +27,7 @@ def clean_data(df, station_id,
     # constrain to date range, get rid of unneeded columns
     df = (
         constrain_date_range(df, start_date, end_date)
-        .drop('time', axis=1)
+        # .drop('time', axis=1)
         .copy()
     )
     
@@ -121,7 +121,7 @@ def daily_state_totals(reservoirs,
         constrain_date_range(all_res, start_date, end_date)
         .groupby('date')
         .agg({
-            'reservoir_storage': 'sum',
+            "reservoir_storage": "sum",
         })
         .reset_index()
     )
@@ -141,10 +141,11 @@ def day_of_year_stats(state_total):
         state_total
         .groupby('day_of_year')
         .reservoir_storage
-        .agg({
-            'lo':   lambda x: np.percentile(x, 20),
-            'mid':  lambda x: np.percentile(x, 40),
-            'hi':   lambda x: np.percentile(x, 60),
-            'whoa': lambda x: np.percentile(x, 80),
-        })
+        .agg(
+            lo=lambda x: np.percentile(x, 20),
+            mid=lambda x: np.percentile(x, 40),
+            hi=lambda x: np.percentile(x, 60),
+            whoa=lambda x: np.percentile(x, 80),
+        )
+        .reset_index()
     )

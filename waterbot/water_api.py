@@ -39,8 +39,6 @@ def fetch_reservoir_storage(
 	df = pd.read_json(
 		resp_str, 
 		orient="records",
-		# header=0, 
-		# names=['date', 'time', 'reservoir_storage'],
 		convert_dates=["date", "obsDate"])
 	df = df[df["value"] >= 0]
 
