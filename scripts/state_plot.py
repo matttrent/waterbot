@@ -47,7 +47,7 @@ def load_seasonal_data():
     infile = os.path.join(
         config.SEASONAL_AVERAGE_DIR,
         config.STATE_STATISTICS)
-    seasonal = pd.read_csv(infile, index_col='day_of_year')
+    seasonal = pd.read_json(infile, orient="columns").set_index("day_of_year")
 
     seasonal = (
         seasonal
@@ -137,7 +137,7 @@ if __name__ == '__main__':
     fig = plot_figure(plot_df)
 
     fnum, filename = tempfile.mkstemp(suffix='.png')
-    print filename
+    print(filename)
 
     if util.environment() == 'production':
         twapi = twitter.get_api()
