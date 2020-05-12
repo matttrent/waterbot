@@ -1,5 +1,5 @@
 import os
-import urlparse
+import urllib.parse
 import peewee
 
 
@@ -9,7 +9,7 @@ def get_connector(_cache=[]):
 		return _cache[0]
 
 	database_url = os.environ.get('DATABASE_URL')
-	urlp = urlparse.urlparse(database_url)
+	urlp = urllib.parse.urlparse(database_url)
 
 	database = peewee.PostgresqlDatabase(
 		urlp.path[1:],

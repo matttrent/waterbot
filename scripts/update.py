@@ -14,7 +14,7 @@ def update_reservoir_storage(reservoir):
 
 	try:
 		storage_df = water_api.fetch_reservoir_storage(
-			station_id=reservoir.station_id)
+			station_ids=reservoir.station_id)
 	except requests.ConnectionError:
 		return
 
@@ -35,7 +35,7 @@ def update_reservoir_storage(reservoir):
 			storage=util.acrefeet_to_liters(row.reservoir_storage)
 		)
 
-	print '{} added {} rows'.format(reservoir.station_id, len(storage_df))
+	print('{} added {} rows'.format(reservoir.station_id, len(storage_df)))
 
 
 def update_all_reservoirs():
@@ -112,7 +112,7 @@ def tweet_changes(reservoir):
 			place_id=reservoir.twitter_place_id)
 		tweet_id = status.id
 	elif util.environment() == 'development':
-		print len(tweet), '\t', tweet 
+		print(len(tweet), '\t', tweet)
 
 	models.Tweet.create(
 		reservoir=reservoir,
