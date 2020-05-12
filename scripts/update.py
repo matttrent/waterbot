@@ -84,9 +84,9 @@ def tweet_changes(reservoir):
 	day_of_year = last_measure.date.timetuple().tm_yday
 	seasonal_avg_fn = os.path.join(
 		config.SEASONAL_AVERAGE_DIR,
-		'{station_id}.csv'.format(station_id=reservoir.station_id)
+		'{station_id}.json'.format(station_id=reservoir.station_id)
 	)
-	seasonal_avg = pd.read_csv(seasonal_avg_fn, index_col=0)
+	seasonal_avg = pd.read_json(seasonal_avg_fn, orient="records").set_index("day_of_year")
 	seasonal_avg = seasonal_avg.loc[day_of_year].reservoir_storage
 	seasonal_multiple = last_measure.storage / util.acrefeet_to_liters(seasonal_avg)
 
