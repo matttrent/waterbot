@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
 		outfile = os.path.join(
 			config.HISTORICAL_LEVELS_DIR,
-			'{station_id}.csv'.format(
+			'{station_id}.json'.format(
 				station_id=station_id)
 		)
-		df.to_csv(outfile, index=False)
+		df.to_json(outfile, orient="records")

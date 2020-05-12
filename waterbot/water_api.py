@@ -8,10 +8,13 @@ from waterbot import config
 
 
 def fetch_reservoir_storage(
-	station_id, sensor_num=15, dur_code='D', start_date=None, end_date=None):
+	station_ids, sensor_num=15, dur_code='D', start_date=None, end_date=None):
 	"""
 
 	"""
+
+	if type(station_ids) is not list:
+		station_ids = [station_ids]
 
 	if end_date is None:
 		end_date = dt.date.today()
@@ -23,26 +26,35 @@ def fetch_reservoir_storage(
 		start_date = end_date - dt.timedelta(days=1)
 
 	payload = dict(
-		station_id=station_id, 
-		sensor_num=sensor_num, 
+		Stations=','.join(station_ids), 
+		SensorNums=sensor_num, 
 		dur_code=dur_code, 
-		start_date=start_date.isoformat(),
-		end_date=end_date.isoformat(),
-		data_wish='View CSV Data'
+		Start=start_date.isoformat(),
+		End=end_date.isoformat(),
 	)
 
 	r = requests.get(config.RESERVOIR_DATA_URL, params=payload)
-	csv_str = io.StringIO(r.text)
+	resp_str = io.StringIO(r.text)
 
-	df = pd.read_csv(
-		csv_str, 
-		header=1, 
-		names=['date', 'time', 'reservoir_storage'],
-		parse_dates=['date'])
-	df.replace('m', np.nan, inplace=True)
-	df.dropna(inplace=True)
-	df.reservoir_storage = df.reservoir_storage.astype(float)
-	df = df[df.reservoir_storage >= 100]
+	df = pd.read_json(
+		resp_str, 
+		orient="records",
+		# header=0, 
+		# names=['date', 'time', 'reservoir_storage'],
+		convert_dates=["date", "obsDate"])
+	df = df[df["value"] >= 0]
+
+	df = df.rename(
+		columns={
+			"stationId": "station_id",
+			"durCode": "duration_code",
+			"SENSOR_NUM": "sensor_num",
+			"sensorType": "sensor_type",
+			"obsDate": "observe_date",
+			"dataFlag": "data_flag",
+		}
+	)
+	df["reservoir_storage"] = df["value"]
 
 	return df
 
@@ -52,23 +64,22 @@ def fetch_all_reservoirs(
 	start_date=config.HISTORICAL_START_DATE,
 	end_date=config.HISTORICAL_END_DATE):
 
-	results = {}
-	for reservoir in reservoirs:
-		station_id = reservoir['station_id']
+	station_ids = [res["station_id"] for res in reservoirs]
 
-		# fetch reservoir data, reattempting until success
-		keep_trying = True
-		while keep_trying:
-			try:
-				df = fetch_reservoir_storage(
-					station_id=station_id,
-					start_date=start_date,
-					end_date=end_date
-				)
-				keep_trying = False
-			except requests.exceptions.ConnectionError:
-				pass
- 
-		results[station_id] = df
+	keep_trying = True
+	while keep_trying:
+		try:
+			df = fetch_reservoir_storage(
+				station_ids=station_ids,
+				start_date=start_date,
+				end_date=end_date
+			)
+			keep_trying = False
+		except requests.exceptions.ConnectionError:
+			pass
+
+	results = {}
+	for station_id in station_ids:
+		results[station_id] = df[df.station_id.str.lower() == station_id.lower()]
 
 	return results

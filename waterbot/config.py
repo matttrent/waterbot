@@ -16,15 +16,14 @@ SEASONAL_AVERAGE_DIR 	= os.path.join(DATA_DIR, 'seasonal_averages')
 PRIMARY_RESERVOIR_LIST 	= 'reservoirs.json'
 ALL_RESERVOIR_LIST 		= 'reservoirs_all.json'
 
-STATE_STATISTICS        = 'california.csv'
+STATE_STATISTICS        = 'california.json'
 
 RESERVOIR_LIST_URL 		= 'http://cdec.water.ca.gov/cgi-progs/reservoirs/RES'
 
-# http://cdec.water.ca.gov/cgi-progs/queryCSV
-# ?station_id=hth
-# &sensor_num=15
+# http://cdec.water.ca.gov/dynamicapp/req/JSONDataServlet
+# ?Stations=hth
+# &SensorNums=15
 # &dur_code=D
-# &start_date=2016-12-01
-# &end_date=2016-12-27
-# &data_wish=View+CSV+Data
-RESERVOIR_DATA_URL 		= 'http://cdec.water.ca.gov/cgi-progs/queryCSV'
+# &Start=2016-12-01
+# &End=2016-12-27
+RESERVOIR_DATA_URL 		= 'http://cdec.water.ca.gov/dynamicapp/req/JSONDataServlet'
